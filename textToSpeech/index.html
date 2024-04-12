@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'poppins',sans-serif;
+        }
+        body{
+            height: 100vh;
+            width: 100vw;
+            background-color: #5F4B8BFF;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .container{
+            
+            width: 600px;
+            
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        #heading{
+            color: white;
+            font-size: 2.5rem;
+            margin-top: 50px;
+            margin-bottom: 5px;
+        }
+        #heading span{
+            color: #ff2963;
+            border-bottom: 4px solid white;
+        }
+        #Text{
+            margin-top: 40px;
+            border-radius: 10px;
+            background-color: #9B4A97FF;
+            outline: none;
+            color: white;
+            padding: 20px;
+            border: none;
+            box-shadow: 0px 0px 2px #9B4A97FF;
+            font-size: 15px;
+        }
+        #Text::placeholder{
+            font-size: 15px;
+            color: white;
+        }
+        .footer{
+            margin-top: 20px;
+            width: 500px;
+            display: flex;
+            
+            align-items: center;
+            gap: 20px;
+        }
+        button{
+            font-size: 16px;
+            background-color: #ff2963;
+            color: white;
+            padding: 10px 30px;
+            border: 0;
+            outline: 0;
+            cursor: pointer;
+            border-radius: 35px;
+            display: flex;
+            align-items: center;
+        }
+        button img{
+            width: 20px;
+            margin-right: 10px;
+        }
+        select{
+            width: 350px;
+            color: white;
+            background-color: #9B4A97FF;
+            padding: 0px 20px;
+            height: 50px;
+            border: 0;
+            outline: 0;
+            border-radius: 35px;
+            appearance: none;
+            background-image: url(icons8-down-chevron-64.png);
+            background-repeat: no-repeat;
+            background-size: 20px;
+            background-position-x: calc(100% - 20px);
+            background-position-y: calc(16px);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 id="heading">Text to Speech <span>Converter</span></h1>
+        <textarea name="Text" id="Text" cols="60" rows="15" placeholder="Write Something Here..."></textarea>
+        <div class="footer">
+            <select></select>
+            <button><img src="play.png" alt="">Listen</button>
+        </div>
+    </div>
+    <script>
+        let speech = new SpeechSynthesisUtterance();
+        let voices = [];
+        let voiceselect = document.querySelector("select");
+        window.speechSynthesis.onvoiceschanged = ()=>{
+            voices = window.speechSynthesis.getVoices();
+            speech.voice = voices[0];
+            voices.forEach((voice,i) => (voiceselect.options[i] = new Option(voice.name,i)));
+        };
+        document.querySelector("button").addEventListener("click",()=>{
+            speech.text = document.querySelector("textarea").value;
+            window.speechSynthesis.speak(speech);
+        });
+        voiceselect.addEventListener("change",()=>{
+            speech.voice = voices[voiceselect.value];
+        });
+    </script>
+</body>
+</html>
