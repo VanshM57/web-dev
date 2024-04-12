@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'poppins',sans-serif;
+        }
+        body{
+            height: 100vh;
+            width: 100vw;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: rgb(57, 55, 55);
+        }
+        .container{
+            width: 400px;
+            position: fixed;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border-radius: 10px;
+            background-color: #fff;
+            
+        }
+        #qrtext{
+            margin: 20px;
+            font-size: 1.5rem;
+            border-radius: 5px;
+            
+        }
+        button{
+            padding: 10px 30px;
+            color: #fff;
+            background-color: blue;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            font-weight:500;
+            margin: 20px;
+        }
+        button:active{
+            background-color: rgb(30, 30, 134);
+        }
+        .qr-image{
+            max-width: 300px;
+            
+        }
+        .show{
+            max-width: 300px;
+            border: 1px solid rgb(70, 67, 67);
+            border-radius: 5px;
+            padding: 10px;
+            margin: 10px;
+        }
+        .anim{
+            animation: shake 0.2s linear;
+            border: 1px solid red;
+        }
+        @keyframes shake{
+            0%{
+                transform: translateX(0);
+
+            }
+            25%{
+                transform: translateX(-2px);
+            }
+            50%{
+                transform: translateX(0);
+            }
+            75%{
+                transform: translateX(2px);
+            }
+            100%{
+                transform: translateX(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="inputsection">
+            <input type="text" id="qrtext" placeholder="Enter Text">
+        </div>
+        <div class="qr-image">
+            <img src="" id="qrimage">
+        </div>
+        <button>Generate QR</button>
+    </div>
+
+    <script>
+        let image = document.getElementById("qrimage");
+        let qrtext = document.getElementById("qrtext");
+        function show(){
+            image.src = " https://api.qrserver.com/v1/create-qr-code/?size=150x150&data="+qrtext.value ;
+        }
+        let btn = document.querySelector("button");
+        btn.addEventListener("click",()=>{
+            if(qrtext.value.length != 0){
+                show();
+                image.classList.add("show");
+            }
+            else{
+                qrtext.classList.add("anim");
+                setTimeout(()=>{
+                    qrtext.classList.remove("anim");
+                },1000);
+            }
+        });
+
+    </script>
+</body>
+</html>
